@@ -57,15 +57,15 @@ impl GraphQLAny {
         }
     }
 
-    pub fn input_object(&self) -> Option<Node<InputObjectType>> {
+    pub fn input(&self) -> Option<Node<InputObjectType>> {
         match self {
-            GraphQLAny::InputObject(input_object) => Some(Node::clone(input_object)),
+            GraphQLAny::InputObject(input) => Some(Node::clone(input)),
             _ => None,
         }
     }
 }
 
-#[derive(Clone, Debug, Eq, PartialEq, Hash, Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Hash, Serialize, Deserialize)]
 #[serde(tag = "kind")]
 pub enum FieldType {
     Named(TypeRef),
@@ -206,11 +206,11 @@ pub struct EnumValueDefinition {
     pub value: String,
 }
 
-#[derive(Debug, Clone, PartialEq, Eq, Serialize)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct InputObjectType {
     pub description: Option<String>,
     pub name: String,
-    pub fields: HashMap<String, Box<InputValueDefinition>>,
+    pub fields: HashMap<String, InputValueDefinition>,
 }
 impl Hash for InputObjectType {
     fn hash<H: Hasher>(&self, state: &mut H) {
@@ -226,10 +226,10 @@ pub struct FieldDefinition {
     pub description: Option<String>,
 }
 
-#[derive(Clone, Debug, Eq, PartialEq, Hash, Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Hash, Serialize, Deserialize)]
 pub struct InputValueDefinition {
     pub description: Option<String>,
     pub name: String,
-    pub ty: Box<FieldType>,
+    pub ty: FieldType,
     pub default_value: Option<String>,
 }

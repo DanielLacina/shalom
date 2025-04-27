@@ -3,7 +3,7 @@ use std::{cell::RefCell, rc::Rc};
 use apollo_compiler::Node;
 use serde::{Deserialize, Serialize};
 
-use crate::schema::types::{EnumType, ScalarType};
+use crate::schema::types::{EnumType, InputObjectType, ScalarType};
 
 /// the name of i.e object in a graphql query based on the parent fields.
 pub type FullPathName = String;
@@ -22,6 +22,7 @@ pub enum Selection {
     Scalar(Rc<ScalarSelection>),
     Object(Rc<ObjectSelection>),
     Enum(Rc<EnumSelection>),
+    InputObject(Rc<InputObjectSelection>)
 }
 
 impl Selection {
@@ -30,6 +31,7 @@ impl Selection {
             Selection::Scalar(node) => node.common.selection_name.clone(),
             Selection::Object(obj) => obj.common.selection_name.clone(),
             Selection::Enum(enum_) => enum_.common.selection_name.clone(),
+            Selection::InputObject(input_object) => input_object.common.selection_name.clone()
         }
     }
     pub fn self_full_path_name(&self) -> &FullPathName {
@@ -38,7 +40,8 @@ impl Selection {
             Selection::Object(obj) => &obj.common.full_name,
             Selection::Enum(_) => {
                 panic!("enums dont have a full name as they are global per schema")
-            }
+            },
+            Selection::InputObject(input_object) => &input_object.common.full_name 
         }
     }
 }
@@ -95,6 +98,24 @@ pub type SharedEnumSelection = Rc<EnumSelection>;
 impl EnumSelection {
     pub fn new(common: SelectionCommon, concrete_type: Node<EnumType>) -> SharedEnumSelection {
         Rc::new(EnumSelection {
+            common,
+            concrete_type,
+        })
+    }
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct InputObjectSelection {
+    #[serde(flatten)]
+    pub common: SelectionCommon,
+    pub concrete_type: Node<InputObjectType>,
+}
+
+pub type SharedInputObjectSelection = Rc<InputObjectSelection>;
+
+impl InputObjectSelection {
+    pub fn new(common: SelectionCommon, concrete_type: Node<InputObjectType>) -> SharedInputObjectSelection {
+        Rc::new(InputObjectSelection {
             common,
             concrete_type,
         })

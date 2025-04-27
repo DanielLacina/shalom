@@ -8,12 +8,12 @@ use log::{info, trace};
 use crate::context::SharedShalomGlobalContext;
 use crate::operation::types::ObjectSelection;
 use crate::schema::context::SharedSchemaContext;
-use crate::schema::types::{EnumType, GraphQLAny, ScalarType};
+use crate::schema::types::{EnumType, GraphQLAny, ScalarType, InputObjectType};
 
 use super::context::{OperationContext, SharedOpCtx};
 use super::types::{
     EnumSelection, ScalarSelection, Selection, SelectionCommon, SharedEnumSelection,
-    SharedObjectSelection, SharedScalarSelection,
+    SharedObjectSelection, SharedScalarSelection, InputObjectSelection, SharedInputObjectSelection
 };
 
 fn full_path_name(this_name: &String, parent: &Option<&Selection>) -> String {
@@ -28,6 +28,13 @@ fn parse_enum_selection(
     concrete_type: Node<EnumType>,
 ) -> SharedEnumSelection {
     EnumSelection::new(selection_common, concrete_type)
+}
+
+fn parse_input_selection(
+    selection_common: SelectionCommon,
+    concrete_type: Node<InputObjectType>,
+) -> SharedInputObjectSelection {
+    InputObjectSelection::new(selection_common, concrete_type)
 }
 
 fn parse_object_selection(
@@ -114,6 +121,7 @@ fn parse_selection_set(
             selection_orig,
         )),
         GraphQLAny::Enum(_enum) => Selection::Enum(parse_enum_selection(selection_common, _enum)),
+        GraphQLAny::InputObject(input) => Selection::InputObject(parse_input_selection(selection_common, input)),
         _ => todo!("Unsupported type {:?}", schema_type),
     };
 

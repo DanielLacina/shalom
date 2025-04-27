@@ -1,131 +1,324 @@
+
+import 'dart:convert';
+
+enum OperationType {
+    Query,
+    Mutation,
+    Subscription
+};
+
+class Request {
+    final String query;
+    final JsonObject variables;
+    final OperationType opType;
+    final String StringopName;
+
+    Request ({
+        required this.query,
+        required this.variables,
+        required this.opType,
+        required this.StringopName
+    });
+    
+}
+
+class Response {
+    final JsonObject data;
+    final String opName;
+
+    Response({
+        required this.data,
+        required this.opName
+    });
+} 
+
+abstract class Requestable {
+    Request toRequest();
+}
+
+abstract class Link {
+    Future<Response> request(Request request)
+}
+
+
+
 typedef JsonObject = Map<String, dynamic>;
 // ignore_for_file: non_constant_identifier_names
 // ignore_for_file: camel_case_types
 
-class RequestGetListingOpt {
-  /// class members
 
-  final GetListingOpt_listingOpt? listingOpt;
 
-  // keywordargs constructor
 
-  RequestGetListingOpt({this.listingOpt});
-  static RequestGetListingOpt fromJson(JsonObject data) {
-    final GetListingOpt_listingOpt? listingOpt_value;
+class 
+    GetListingOpt
+ extends Requestable {
 
-    final JsonObject? listingOpt$raw = data['listingOpt'];
-    if (listingOpt$raw != null) {
-      listingOpt_value = GetListingOpt_listingOpt.fromJson(listingOpt$raw);
-    } else {
-      listingOpt_value = null;
+    /// class members
+    
+        
+            final GetListingOpt_listingOpt? listingOpt;
+        
+    
+    // keywordargs constructor
+    
+    GetListingOpt
+({
+    
+        this.listingOpt,
+    
+    });
+    static 
+    GetListingOpt
+ fromJson(JsonObject data) {
+    
+        
+            final GetListingOpt_listingOpt? listingOpt_value;
+            
+                final JsonObject? listingOpt$raw = data['listingOpt']; 
+                if (listingOpt$raw != null) {
+                    listingOpt_value = GetListingOpt_listingOpt.fromJson(listingOpt$raw);
+                } else {
+                    listingOpt_value = null;
+                }
+            
+        
+    
+    return 
+    GetListingOpt
+(
+    
+        
+        listingOpt: listingOpt_value,
+    
+    );
     }
-
-    return RequestGetListingOpt(listingOpt: listingOpt_value);
-  }
-
-  RequestGetListingOpt updateWithJson(JsonObject data) {
-    final GetListingOpt_listingOpt? listingOpt_value;
-    if (data.containsKey('listingOpt')) {
-      final JsonObject? listingOpt$raw = data['listingOpt'];
-      if (listingOpt$raw != null) {
-        listingOpt_value = GetListingOpt_listingOpt.fromJson(listingOpt$raw);
-      } else {
-        listingOpt_value = null;
-      }
-    } else {
-      listingOpt_value = listingOpt;
+    
+    GetListingOpt
+ updateWithJson(JsonObject data) {
+    
+        
+        final GetListingOpt_listingOpt? listingOpt_value;
+        if (data.containsKey('listingOpt')) {
+            
+                final JsonObject? listingOpt$raw = data['listingOpt']; 
+                if (listingOpt$raw != null) {
+                    listingOpt_value = GetListingOpt_listingOpt.fromJson(listingOpt$raw);
+                } else {
+                    listingOpt_value = null;
+                }
+            
+        } else {
+            listingOpt_value = listingOpt;
+        }
+        
+    
+    return 
+    GetListingOpt
+(
+    
+        
+        listingOpt: listingOpt_value,
+    
+    );
     }
-
-    return RequestGetListingOpt(listingOpt: listingOpt_value);
-  }
-
-  @override
-  bool operator ==(Object other) {
+    @override
+    bool operator ==(Object other) {
     return identical(this, other) ||
-        (other is RequestGetListingOpt && other.listingOpt == listingOpt);
-  }
+    (other is 
+    GetListingOpt
+ &&
+    
+        other.listingOpt == listingOpt 
+    
+    );
+    }
+    @override
+    int get hashCode =>
+    
+        listingOpt.hashCode;
+    
+    JsonObject toJson() {
+    return {
+    
+        
+        'listingOpt':
+            
+                listingOpt?.toJson()
+            
+        ,
+    
+    };
+    }
 
-  @override
-  int get hashCode => listingOpt.hashCode;
 
-  JsonObject toJson() {
-    return {'listingOpt': listingOpt?.toJson()};
-  }
+    Request toRequest(JsonObject variables) {
+        final jsonEncoder = JsonEncoder();
+        String queryString = jsonEncoder.convert(toJson()); 
+        Request(
+            query: queryString, 
+            variables: variables, 
+            opType: OperationType.Query, 
+            StringopName: "GetListingOpt"
+        )
+    }
 }
 
 // ------------ OBJECT DEFINITIONS -------------
 
-class GetListingOpt_listingOpt {
-  /// class members
 
-  final String id;
-
-  final String name;
-
-  final int? price;
-
-  // keywordargs constructor
-  GetListingOpt_listingOpt({required this.id, required this.name, this.price});
-  static GetListingOpt_listingOpt fromJson(JsonObject data) {
-    final String id_value = data['id'];
-
-    final String name_value = data['name'];
-
-    final int? price_value = data['price'];
-
+    class GetListingOpt_listingOpt  {
+        
+    /// class members
+    
+        
+            final String id;
+        
+    
+        
+            final String name;
+        
+    
+        
+            final int? price;
+        
+    
+    // keywordargs constructor
+    GetListingOpt_listingOpt({
+    required
+        this.id,
+    required
+        this.name,
+    
+        this.price,
+    
+    });
+    static GetListingOpt_listingOpt fromJson(JsonObject data) {
+    
+        
+            final String id_value = data['id'];
+        
+    
+        
+            final String name_value = data['name'];
+        
+    
+        
+            final int? price_value = data['price'];
+        
+    
     return GetListingOpt_listingOpt(
-      id: id_value,
-
-      name: name_value,
-
-      price: price_value,
+    
+        
+        id: id_value,
+    
+        
+        name: name_value,
+    
+        
+        price: price_value,
+    
     );
-  }
-
-  GetListingOpt_listingOpt updateWithJson(JsonObject data) {
-    final String id_value;
-    if (data.containsKey('id')) {
-      id_value = data['id'];
-    } else {
-      id_value = id;
     }
-
-    final String name_value;
-    if (data.containsKey('name')) {
-      name_value = data['name'];
-    } else {
-      name_value = name;
-    }
-
-    final int? price_value;
-    if (data.containsKey('price')) {
-      price_value = data['price'];
-    } else {
-      price_value = price;
-    }
-
+    GetListingOpt_listingOpt updateWithJson(JsonObject data) {
+    
+        
+            final String id_value;
+            if (data.containsKey('id')) {
+            id_value = data['id'];
+            } else {
+            id_value = id;
+            }
+        
+    
+        
+            final String name_value;
+            if (data.containsKey('name')) {
+            name_value = data['name'];
+            } else {
+            name_value = name;
+            }
+        
+    
+        
+            final int? price_value;
+            if (data.containsKey('price')) {
+            price_value = data['price'];
+            } else {
+            price_value = price;
+            }
+        
+    
     return GetListingOpt_listingOpt(
-      id: id_value,
-
-      name: name_value,
-
-      price: price_value,
+    
+        
+        id: id_value,
+    
+        
+        name: name_value,
+    
+        
+        price: price_value,
+    
     );
-  }
-
-  @override
-  bool operator ==(Object other) {
+    }
+    @override
+    bool operator ==(Object other) {
     return identical(this, other) ||
-        (other is GetListingOpt_listingOpt &&
-            other.id == id &&
-            other.name == name &&
-            other.price == price);
-  }
+    (other is GetListingOpt_listingOpt &&
+    
+        other.id == id &&
+    
+        other.name == name &&
+    
+        other.price == price 
+    
+    );
+    }
+    @override
+    int get hashCode =>
+    
+        Object.hashAll([
+        
+            
+            id,
+        
+            
+            name,
+        
+            
+            price,
+        
+        ]);
+    
+    JsonObject toJson() {
+    return {
+    
+        
+        'id':
+            
+                id
+            
+        ,
+    
+        
+        'name':
+            
+                name
+            
+        ,
+    
+        
+        'price':
+            
+                price
+            
+        ,
+    
+    };
+    }
 
-  @override
-  int get hashCode => Object.hashAll([id, name, price]);
 
-  JsonObject toJson() {
-    return {'id': id, 'name': name, 'price': price};
-  }
-}
+    }
+
+
+

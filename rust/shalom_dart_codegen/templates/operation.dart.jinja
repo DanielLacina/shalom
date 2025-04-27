@@ -1,6 +1,46 @@
 {% if schema.context.types.enums | length > 0 %}
 import "schema.shalom.dart";
 {% endif %}
+import 'dart:convert';
+
+enum OperationType {
+    Query,
+    Mutation,
+    Subscription
+};
+
+class Request {
+    final String query;
+    final JsonObject variables;
+    final OperationType opType;
+    final String StringopName;
+
+    Request ({
+        required this.query,
+        required this.variables,
+        required this.opType,
+        required this.StringopName
+    });
+    
+}
+
+class Response {
+    final JsonObject data;
+    final String opName;
+
+    Response({
+        required this.data,
+        required this.opName
+    });
+} 
+
+abstract class Requestable {
+    Request toRequest();
+}
+
+abstract class Link {
+    Future<Response> request(Request request)
+}
 
 {% set root_selection = operation.context.root_type.selection_name %}
 {% macro base_object_impl(typename, selections) %}
@@ -17,6 +57,9 @@ import "schema.shalom.dart";
             throw NotImplemented();
         {% endif %}
     {% endfor %}
+    const JsonObject variables = {
+        {% for %}
+    }
     // keywordargs constructor
     {{ typename }}({
     {% for selection in selections -%}
@@ -159,6 +202,7 @@ import "schema.shalom.dart";
     {% endfor %}
     };
     }
+
 {% endmacro %}
 typedef JsonObject = Map<String, dynamic>;
 // ignore_for_file: non_constant_identifier_names
@@ -167,10 +211,20 @@ typedef JsonObject = Map<String, dynamic>;
 
 
 {% set root_type_name %}
-    Request{{ root_selection }}
+    {{ root_selection }}
 {% endset %}
-class {{ root_type_name }}{
+class {{ root_type_name }} extends Requestable {
 {{ base_object_impl(root_type_name, operation.context.root_type.selections) }}
+    Request toRequest(JsonObject variables) {
+        final jsonEncoder = JsonEncoder();
+        String queryString = jsonEncoder.convert(toJson()); 
+        Request(
+            query: queryString, 
+            variables: variables, 
+            opType: OperationType.Query, 
+            StringopName: "{{ root_selection }}"
+        )
+    }
 }
 
 // ------------ OBJECT DEFINITIONS -------------

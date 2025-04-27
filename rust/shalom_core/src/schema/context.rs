@@ -1,6 +1,6 @@
 use crate::schema::types::GraphQLAny;
 use apollo_compiler::{validation::Valid, Node};
-use serde::{Serialize, Serializer};
+use serde::{Deserialize, Serialize, Serializer};
 use std::fmt::Debug;
 use std::{
     collections::HashMap,
@@ -133,5 +133,12 @@ impl SchemaContext {
         types_ctx.add_enum(name, type_);
         Ok(())
     }
+
+    pub fn add_input(&self, name: String, type_: Node<InputObjectType>) -> anyhow::Result<()> {
+        let mut types_ctx = self.get_types();
+        types_ctx.add_input(name, type_);
+        Ok(())
+     }
+
 }
 pub type SharedSchemaContext = Arc<SchemaContext>;

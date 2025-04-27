@@ -6,11 +6,11 @@ use super::{
         EnumType, GraphQLAny, InputObjectType, InterfaceType, ObjectType, ScalarType, UnionType,
     },
 };
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Debug, Serialize)]
+#[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct TypeRef {
-    #[serde(skip_serializing)]
+    #[serde(skip)]
     #[allow(unused)]
     ctx: SharedSchemaContext,
     pub name: String,
@@ -52,7 +52,7 @@ impl TypeRef {
     pub fn is_enum(&self) -> Option<Node<EnumType>> {
         self.resolve().and_then(|t| t.enum_())
     }
-    pub fn is_input_object(&self) -> Option<Node<InputObjectType>> {
-        self.resolve().and_then(|t| t.input_object())
+    pub fn is_input(&self) -> Option<Node<InputObjectType>> {
+        self.resolve().and_then(|t| t.input())
     }
 }
