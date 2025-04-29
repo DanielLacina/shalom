@@ -2,7 +2,7 @@ use std::{
     collections::HashSet,
     hash::{Hash, Hasher},
 };
-
+use super::context::SchemaContext;
 use super::utils::TypeRef;
 use apollo_compiler::Node;
 use serde::{Deserialize, Serialize};
@@ -91,16 +91,16 @@ impl FieldType {
         }
     }
 
-    pub fn get_scalar(&self) -> Option<Node<ScalarType>> {
+    pub fn get_scalar(&self, ctx: &SchemaContext) -> Option<Node<ScalarType>> {
         match self {
-            FieldType::Named(ty) | FieldType::NonNullNamed(ty) => ty.get_scalar(),
+            FieldType::Named(ty) | FieldType::NonNullNamed(ty) => ty.get_scalar(ctx),
             _ => None,
         }
     }
 
-    pub fn get_object(&self) -> Option<Node<ObjectType>> {
+    pub fn get_object(&self, ctx: &SchemaContext) -> Option<Node<ObjectType>> {
         match self {
-            FieldType::Named(ty) | FieldType::NonNullNamed(ty) => ty.get_object(),
+            FieldType::Named(ty) | FieldType::NonNullNamed(ty) => ty.get_object(ctx),
             _ => None,
         }
     }
@@ -221,7 +221,6 @@ impl Hash for InputObjectType {
 pub struct FieldDefinition {
     pub name: String,
     pub ty: FieldType,
-    #[serde(skip_serializing)]
     pub arguments: Vec<InputValueDefinition>,
     pub description: Option<String>,
 }
@@ -233,3 +232,4 @@ pub struct InputValueDefinition {
     pub ty: FieldType,
     pub default_value: Option<String>,
 }
+

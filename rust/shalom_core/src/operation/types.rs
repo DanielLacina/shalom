@@ -3,7 +3,7 @@ use std::{cell::RefCell, rc::Rc};
 use apollo_compiler::Node;
 use serde::{Deserialize, Serialize};
 
-use crate::schema::types::{EnumType, InputObjectType, ScalarType};
+use crate::schema::types::{EnumType, InputObjectType, ScalarType, FieldType};
 
 /// the name of i.e object in a graphql query based on the parent fields.
 pub type FullPathName = String;
@@ -120,4 +120,11 @@ impl InputObjectSelection {
             concrete_type,
         })
     }
+}
+
+#[derive(Clone, Debug, Eq, PartialEq, Hash, Serialize)]
+pub struct VariableDefinition {
+    pub name: String,
+    pub ty: FieldType,
+    pub default_value: Option<String>
 }

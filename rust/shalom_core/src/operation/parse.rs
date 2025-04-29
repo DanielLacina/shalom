@@ -9,11 +9,12 @@ use crate::context::SharedShalomGlobalContext;
 use crate::operation::types::ObjectSelection;
 use crate::schema::context::SharedSchemaContext;
 use crate::schema::types::{EnumType, GraphQLAny, ScalarType, InputObjectType};
+use crate::schema::resolver::resolve_type;
 
 use super::context::{OperationContext, SharedOpCtx};
 use super::types::{
     EnumSelection, ScalarSelection, Selection, SelectionCommon, SharedEnumSelection,
-    SharedObjectSelection, SharedScalarSelection, InputObjectSelection, SharedInputObjectSelection
+    SharedObjectSelection, SharedScalarSelection, InputObjectSelection, SharedInputObjectSelection, VariableDefinition 
 };
 
 fn full_path_name(this_name: &String, parent: &Option<&Selection>) -> String {
@@ -136,6 +137,17 @@ fn parse_operation(
     file_path: PathBuf,
 ) -> SharedOpCtx {
     let mut ctx = OperationContext::new(global_ctx.schema_ctx.clone(), file_path);
+    for variable in op.variables.iter() {
+        let name = variable.name.to_string(); 
+        let default_value = variable.default_value.as_ref().map(|v| v.to_string());
+        let ty = resolve_type(global_ctx.schema_ctx.clone(), variable.ty.item_type().clone());
+        let variable_definition = VariableDefinition {
+            name: name.clone(),       
+            ty,
+            default_value
+        };
+        ctx.add_variable(name, variable_definition); 
+    }
     let selection_common = SelectionCommon {
         full_name: name.clone(),
         is_optional: false,

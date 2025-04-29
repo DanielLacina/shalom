@@ -57,9 +57,7 @@ abstract class Link {
             throw NotImplemented();
         {% endif %}
     {% endfor %}
-    const JsonObject variables = {
-        {% for %}
-    }
+
     // keywordargs constructor
     {{ typename }}({
     {% for selection in selections -%}
@@ -214,17 +212,23 @@ typedef JsonObject = Map<String, dynamic>;
     {{ root_selection }}
 {% endset %}
 class {{ root_type_name }} extends Requestable {
+const JsonObject variables = {
+    const variables = { {% for variable in operation.context.variables %}
+            {{ variable }}
+    {% endfor %} 
+    };
+}
 {{ base_object_impl(root_type_name, operation.context.root_type.selections) }}
-    Request toRequest(JsonObject variables) {
-        final jsonEncoder = JsonEncoder();
-        String queryString = jsonEncoder.convert(toJson()); 
-        Request(
-            query: queryString, 
-            variables: variables, 
-            opType: OperationType.Query, 
-            StringopName: "{{ root_selection }}"
-        )
-    }
+Request toRequest(JsonObject variables) {
+    final jsonEncoder = JsonEncoder();
+    String queryString = jsonEncoder.convert(toJson()); 
+    Request(
+        query: queryString, 
+        variables: variables, 
+        opType: OperationType.Query, 
+        StringopName: "{{ root_selection }}"
+    )
+}
 }
 
 // ------------ OBJECT DEFINITIONS -------------

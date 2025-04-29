@@ -91,7 +91,7 @@ fn resolve_scalar(
 ) -> TypeRef {
     // Check if the type is already resolved
     if context.get_type(&name).is_some() {
-        return TypeRef::new(context.clone(), name);
+        return TypeRef::new( name);
     }
     let description = origin.description.as_ref().map(|v| v.to_string());
     let scalar = Node::new(ScalarType {
@@ -99,7 +99,7 @@ fn resolve_scalar(
         description,
     });
     context.add_scalar(name.clone(), scalar).unwrap();
-    TypeRef::new(context.clone(), name)
+    TypeRef::new( name)
 }
 
 fn resolve_object(
@@ -109,14 +109,14 @@ fn resolve_object(
 ) -> TypeRef {
     // Check if the type is already resolved
     if context.get_type(&name).is_some() {
-        return TypeRef::new(context.clone(), name);
+        return TypeRef::new( name);
     }
     let mut fields = Vec::new();
     for (name, field) in origin.fields.iter() {
         let name = name.to_string();
         let ty = resolve_type(context.clone(), field.ty.clone());
         let description = field.description.as_ref().map(|v| v.to_string());
-        let arguments = vec![];
+        let arguments: Vec<InputValueDefinition> = field.arguments.iter().map(|argument| argument.).collect();
         fields.push(FieldDefinition {
             name,
             ty,
@@ -134,7 +134,7 @@ fn resolve_object(
         implements_interfaces: HashSet::new(),
     });
     context.add_object(name.clone(), object).unwrap();
-    TypeRef::new(context.clone(), name)
+    TypeRef::new( name)
 }
 
 #[allow(unused)]
@@ -144,7 +144,7 @@ fn resolve_enum(
     origin: Node<apollo_schema::EnumType>,
 ) -> TypeRef {
     if context.get_type(&name).is_some() {
-        return TypeRef::new(context, name);
+        return TypeRef::new( name);
     }
     let mut members = HashMap::new();
     for (name, value) in origin.values.iter() {
@@ -160,7 +160,7 @@ fn resolve_enum(
         members,
     };
     context.add_enum(name.clone(), Node::new(enum_type));
-    TypeRef::new(context, name)
+    TypeRef::new( name)
 }
 
 #[allow(unused)]
@@ -170,7 +170,7 @@ fn resolve_input(
     origin: Node<apollo_schema::InputObjectType>,
 ) -> TypeRef {
     if context.get_type(&name).is_some() {
-        return TypeRef::new(context, name);
+        return TypeRef::new( name);
     }
     let description = origin.description.as_ref().map(|v| v.to_string());
     let mut input_fields = HashMap::new();
@@ -192,16 +192,16 @@ fn resolve_input(
           fields: input_fields
     }; 
     context.add_input(name.clone(), Node::new(input));
-    TypeRef::new(context, name)
+    TypeRef::new( name)
 }
 
 pub fn resolve_type(context: SharedSchemaContext, origin: apollo_schema::Type) -> FieldType {
     match origin {
         apollo_schema::Type::Named(named) => {
-            FieldType::Named(TypeRef::new(context, named.to_string()))
+            FieldType::Named(TypeRef::new( named.to_string()))
         }
         apollo_schema::Type::NonNullNamed(non_null) => {
-            FieldType::NonNullNamed(TypeRef::new(context, non_null.as_str().to_string()))
+            FieldType::NonNullNamed(TypeRef::new( non_null.as_str().to_string()))
         }
         apollo_schema::Type::List(of_type) => {
             FieldType::List(Box::new(resolve_type(context, *of_type)))
