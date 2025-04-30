@@ -1,57 +1,13 @@
-
+import "schema.shalom.dart";
 import 'dart:convert';
-
-enum OperationType {
-    Query,
-    Mutation,
-    Subscription
-};
-
-class Request {
-    final String query;
-    final JsonObject variables;
-    final OperationType opType;
-    final String StringopName;
-
-    Request ({
-        required this.query,
-        required this.variables,
-        required this.opType,
-        required this.StringopName
-    });
-    
-}
-
-class Response {
-    final JsonObject data;
-    final String opName;
-
-    Response({
-        required this.data,
-        required this.opName
-    });
-} 
-
-abstract class Requestable {
-    Request toRequest();
-}
-
-abstract class Link {
-    Future<Response> request(Request request)
-}
-
-
-
-typedef JsonObject = Map<String, dynamic>;
-// ignore_for_file: non_constant_identifier_names
-// ignore_for_file: camel_case_types
+import "dart/shalom_core/"
 
 
 
 
-class 
-    GetListinOptWithUserOpt
- extends Requestable {
+
+
+class GetListinOptWithUserOpt{
 
     /// class members
     
@@ -59,17 +15,14 @@ class
             final GetListinOptWithUserOpt_listingOpt? listingOpt;
         
     
+
     // keywordargs constructor
-    
-    GetListinOptWithUserOpt
-({
+    GetListinOptWithUserOpt({
     
         this.listingOpt,
     
     });
-    static 
-    GetListinOptWithUserOpt
- fromJson(JsonObject data) {
+    static GetListinOptWithUserOpt fromJson(JsonObject data) {
     
         
             final GetListinOptWithUserOpt_listingOpt? listingOpt_value;
@@ -83,18 +36,14 @@ class
             
         
     
-    return 
-    GetListinOptWithUserOpt
-(
+    return GetListinOptWithUserOpt(
     
         
         listingOpt: listingOpt_value,
     
     );
     }
-    
-    GetListinOptWithUserOpt
- updateWithJson(JsonObject data) {
+    GetListinOptWithUserOpt updateWithJson(JsonObject data) {
     
         
         final GetListinOptWithUserOpt_listingOpt? listingOpt_value;
@@ -112,9 +61,7 @@ class
         }
         
     
-    return 
-    GetListinOptWithUserOpt
-(
+    return GetListinOptWithUserOpt(
     
         
         listingOpt: listingOpt_value,
@@ -124,9 +71,7 @@ class
     @override
     bool operator ==(Object other) {
     return identical(this, other) ||
-    (other is 
-    GetListinOptWithUserOpt
- &&
+    (other is GetListinOptWithUserOpt &&
     
         other.listingOpt == listingOpt 
     
@@ -151,16 +96,6 @@ class
     }
 
 
-    Request toRequest(JsonObject variables) {
-        final jsonEncoder = JsonEncoder();
-        String queryString = jsonEncoder.convert(toJson()); 
-        Request(
-            query: queryString, 
-            variables: variables, 
-            opType: OperationType.Query, 
-            StringopName: "GetListinOptWithUserOpt"
-        )
-    }
 }
 
 // ------------ OBJECT DEFINITIONS -------------
@@ -186,6 +121,7 @@ class
             final GetListinOptWithUserOpt_listingOpt_userOpt? userOpt;
         
     
+
     // keywordargs constructor
     GetListinOptWithUserOpt_listingOpt({
     required
@@ -384,6 +320,7 @@ class
             final String name;
         
     
+
     // keywordargs constructor
     GetListinOptWithUserOpt_listingOpt_userOpt({
     required
@@ -491,3 +428,39 @@ class
 
 
 
+
+class RequestGetListinOptWithUserOpt extends Requestable {
+    final GetListinOptWithUserOpt operation;
+    final GetListinOptWithUserOptVariables variables;
+
+    RequestGetListinOptWithUserOpt({
+        required this.operation,  
+        required this.variables
+    });
+
+    Request toRequest() {
+        final jsonEncoder = JsonEncoder();
+        String queryString = jsonEncoder.convert(operation.toJson()); 
+        return Request(
+            query: queryString, 
+            variables: variables.toJson(), 
+            opType: OperationType.Query, 
+            StringopName: "GetListinOptWithUserOpt"
+        );
+    }
+}
+
+
+class GetListinOptWithUserOptVariables {
+    
+
+    GetListinOptWithUserOptVariables({
+        
+    });
+
+    JsonObject toJson() {
+        return {
+              
+        };
+    } 
+}

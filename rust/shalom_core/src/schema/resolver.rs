@@ -116,7 +116,20 @@ fn resolve_object(
         let name = name.to_string();
         let ty = resolve_type(context.clone(), field.ty.clone());
         let description = field.description.as_ref().map(|v| v.to_string());
-        let arguments: Vec<InputValueDefinition> = field.arguments.iter().map(|argument| argument.).collect();
+        // let arguments: Vec<InputValueDefinition> = field.arguments.iter().map(|argument| {
+        //     let description = argument.description.as_ref().map(|v| v.to_string());
+        //     let name = argument.name.to_string();
+        //     let ty = resolve_type(context.clone(), *argument.ty.clone().clone());
+        //     let default_value = argument.default_value.as_ref().map(|v| v.to_string());
+        //     let input_value_definition = InputValueDefinition {
+        //         description,
+        //         name,
+        //         default_value,
+        //         ty 
+        //     };
+        //     input_value_definition
+        // }).collect();
+        let arguments = Vec::new();
         fields.push(FieldDefinition {
             name,
             ty,
@@ -255,13 +268,13 @@ mod tests {
         let object = ctx.get_type("Query").unwrap().object().unwrap();
 
         let hello_field = object.get_field("hello").unwrap();
-        assert!(hello_field.ty.get_scalar().unwrap().is_string());
+        assert!(hello_field.ty.get_scalar(&ctx).unwrap().is_string());
         let world_field = object.get_field("world").unwrap();
-        assert!(world_field.ty.get_scalar().unwrap().is_int());
+        assert!(world_field.ty.get_scalar(&ctx).unwrap().is_int());
         let id_field = object.get_field("id").unwrap();
-        assert!(id_field.ty.get_scalar().unwrap().is_id());
+        assert!(id_field.ty.get_scalar(&ctx).unwrap().is_id());
         let foo_field = object.get_field("foo").unwrap();
-        assert!(foo_field.ty.get_scalar().unwrap().is_float());
+        assert!(foo_field.ty.get_scalar(&ctx).unwrap().is_float());
         // optional
         assert!(foo_field.ty.is_nullable());
     }

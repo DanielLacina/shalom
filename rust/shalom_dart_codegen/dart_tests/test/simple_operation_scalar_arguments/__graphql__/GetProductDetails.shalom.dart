@@ -1,44 +1,5 @@
-
+import "schema.shalom.dart";
 import 'dart:convert';
-
-enum OperationType {
-    Query,
-    Mutation,
-    Subscription
-};
-
-class Request {
-    final String query;
-    final JsonObject variables;
-    final OperationType opType;
-    final String StringopName;
-
-    Request ({
-        required this.query,
-        required this.variables,
-        required this.opType,
-        required this.StringopName
-    });
-    
-}
-
-class Response {
-    final JsonObject data;
-    final String opName;
-
-    Response({
-        required this.data,
-        required this.opName
-    });
-} 
-
-abstract class Requestable {
-    Request toRequest();
-}
-
-abstract class Link {
-    Future<Response> request(Request request)
-}
 
 
 
@@ -51,7 +12,7 @@ typedef JsonObject = Map<String, dynamic>;
 
 class 
     GetProductDetails
- extends Requestable {
+{
 
     /// class members
     
@@ -59,7 +20,7 @@ class
             final GetProductDetails_product? product;
         
     
-    
+
     // keywordargs constructor
     
     GetProductDetails
@@ -152,16 +113,6 @@ class
     }
 
 
-    Request toRequest(JsonObject variables) {
-        final jsonEncoder = JsonEncoder();
-        String queryString = jsonEncoder.convert(toJson()); 
-        Request(
-            query: queryString, 
-            variables: variables, 
-            opType: OperationType.Query, 
-            StringopName: "GetProductDetails"
-        )
-    }
 }
 
 // ------------ OBJECT DEFINITIONS -------------
@@ -187,7 +138,7 @@ class
             final double? discountedPrice;
         
     
-    
+
     // keywordargs constructor
     GetProductDetails_product({
     required
@@ -361,3 +312,31 @@ class
 
 
 
+
+class RequestGetProductDetails extends Requestable {
+    final 
+    GetProductDetails
+ operation;
+    final GetProductDetailsVariables variables;
+
+    Request toRequest() {
+        final jsonEncoder = JsonEncoder();
+        String queryString = jsonEncoder.convert(operation.toJson()); 
+        Request(
+            query: queryString, 
+            variables: variable.toJson(), 
+            opType: OperationType.Query, 
+            StringopName: "GetProductDetails"
+        )
+    }
+}
+
+class GetProductDetailsVariables {
+    
+    final Boolean name;
+    
+    final ID name;
+    
+    final Float name;
+    
+}

@@ -1,57 +1,13 @@
-
+import "schema.shalom.dart";
 import 'dart:convert';
-
-enum OperationType {
-    Query,
-    Mutation,
-    Subscription
-};
-
-class Request {
-    final String query;
-    final JsonObject variables;
-    final OperationType opType;
-    final String StringopName;
-
-    Request ({
-        required this.query,
-        required this.variables,
-        required this.opType,
-        required this.StringopName
-    });
-    
-}
-
-class Response {
-    final JsonObject data;
-    final String opName;
-
-    Response({
-        required this.data,
-        required this.opName
-    });
-} 
-
-abstract class Requestable {
-    Request toRequest();
-}
-
-abstract class Link {
-    Future<Response> request(Request request)
-}
-
-
-
-typedef JsonObject = Map<String, dynamic>;
-// ignore_for_file: non_constant_identifier_names
-// ignore_for_file: camel_case_types
+import "dart/shalom_core/"
 
 
 
 
-class 
-    GetString
- extends Requestable {
+
+
+class GetString{
 
     /// class members
     
@@ -59,34 +15,27 @@ class
             final String string;
         
     
+
     // keywordargs constructor
-    
-    GetString
-({
+    GetString({
     required
         this.string,
     
     });
-    static 
-    GetString
- fromJson(JsonObject data) {
+    static GetString fromJson(JsonObject data) {
     
         
             final String string_value = data['string'];
         
     
-    return 
-    GetString
-(
+    return GetString(
     
         
         string: string_value,
     
     );
     }
-    
-    GetString
- updateWithJson(JsonObject data) {
+    GetString updateWithJson(JsonObject data) {
     
         
             final String string_value;
@@ -97,9 +46,7 @@ class
             }
         
     
-    return 
-    GetString
-(
+    return GetString(
     
         
         string: string_value,
@@ -109,9 +56,7 @@ class
     @override
     bool operator ==(Object other) {
     return identical(this, other) ||
-    (other is 
-    GetString
- &&
+    (other is GetString &&
     
         other.string == string 
     
@@ -136,16 +81,6 @@ class
     }
 
 
-    Request toRequest(JsonObject variables) {
-        final jsonEncoder = JsonEncoder();
-        String queryString = jsonEncoder.convert(toJson()); 
-        Request(
-            query: queryString, 
-            variables: variables, 
-            opType: OperationType.Query, 
-            StringopName: "GetString"
-        )
-    }
 }
 
 // ------------ OBJECT DEFINITIONS -------------
@@ -153,3 +88,39 @@ class
 
 
 
+
+class RequestGetString extends Requestable {
+    final GetString operation;
+    final GetStringVariables variables;
+
+    RequestGetString({
+        required this.operation,  
+        required this.variables
+    });
+
+    Request toRequest() {
+        final jsonEncoder = JsonEncoder();
+        String queryString = jsonEncoder.convert(operation.toJson()); 
+        return Request(
+            query: queryString, 
+            variables: variables.toJson(), 
+            opType: OperationType.Query, 
+            StringopName: "GetString"
+        );
+    }
+}
+
+
+class GetStringVariables {
+    
+
+    GetStringVariables({
+        
+    });
+
+    JsonObject toJson() {
+        return {
+              
+        };
+    } 
+}

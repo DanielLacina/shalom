@@ -1,57 +1,13 @@
-
+import "schema.shalom.dart";
 import 'dart:convert';
-
-enum OperationType {
-    Query,
-    Mutation,
-    Subscription
-};
-
-class Request {
-    final String query;
-    final JsonObject variables;
-    final OperationType opType;
-    final String StringopName;
-
-    Request ({
-        required this.query,
-        required this.variables,
-        required this.opType,
-        required this.StringopName
-    });
-    
-}
-
-class Response {
-    final JsonObject data;
-    final String opName;
-
-    Response({
-        required this.data,
-        required this.opName
-    });
-} 
-
-abstract class Requestable {
-    Request toRequest();
-}
-
-abstract class Link {
-    Future<Response> request(Request request)
-}
-
-
-
-typedef JsonObject = Map<String, dynamic>;
-// ignore_for_file: non_constant_identifier_names
-// ignore_for_file: camel_case_types
+import "dart/shalom_core/"
 
 
 
 
-class 
-    GetIntOptional
- extends Requestable {
+
+
+class GetIntOptional{
 
     /// class members
     
@@ -59,34 +15,27 @@ class
             final int? intOptional;
         
     
+
     // keywordargs constructor
-    
-    GetIntOptional
-({
+    GetIntOptional({
     
         this.intOptional,
     
     });
-    static 
-    GetIntOptional
- fromJson(JsonObject data) {
+    static GetIntOptional fromJson(JsonObject data) {
     
         
             final int? intOptional_value = data['intOptional'];
         
     
-    return 
-    GetIntOptional
-(
+    return GetIntOptional(
     
         
         intOptional: intOptional_value,
     
     );
     }
-    
-    GetIntOptional
- updateWithJson(JsonObject data) {
+    GetIntOptional updateWithJson(JsonObject data) {
     
         
             final int? intOptional_value;
@@ -97,9 +46,7 @@ class
             }
         
     
-    return 
-    GetIntOptional
-(
+    return GetIntOptional(
     
         
         intOptional: intOptional_value,
@@ -109,9 +56,7 @@ class
     @override
     bool operator ==(Object other) {
     return identical(this, other) ||
-    (other is 
-    GetIntOptional
- &&
+    (other is GetIntOptional &&
     
         other.intOptional == intOptional 
     
@@ -136,16 +81,6 @@ class
     }
 
 
-    Request toRequest(JsonObject variables) {
-        final jsonEncoder = JsonEncoder();
-        String queryString = jsonEncoder.convert(toJson()); 
-        Request(
-            query: queryString, 
-            variables: variables, 
-            opType: OperationType.Query, 
-            StringopName: "GetIntOptional"
-        )
-    }
 }
 
 // ------------ OBJECT DEFINITIONS -------------
@@ -153,3 +88,39 @@ class
 
 
 
+
+class RequestGetIntOptional extends Requestable {
+    final GetIntOptional operation;
+    final GetIntOptionalVariables variables;
+
+    RequestGetIntOptional({
+        required this.operation,  
+        required this.variables
+    });
+
+    Request toRequest() {
+        final jsonEncoder = JsonEncoder();
+        String queryString = jsonEncoder.convert(operation.toJson()); 
+        return Request(
+            query: queryString, 
+            variables: variables.toJson(), 
+            opType: OperationType.Query, 
+            StringopName: "GetIntOptional"
+        );
+    }
+}
+
+
+class GetIntOptionalVariables {
+    
+
+    GetIntOptionalVariables({
+        
+    });
+
+    JsonObject toJson() {
+        return {
+              
+        };
+    } 
+}

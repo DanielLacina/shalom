@@ -1,59 +1,13 @@
-
 import "schema.shalom.dart";
-
 import 'dart:convert';
-
-enum OperationType {
-    Query,
-    Mutation,
-    Subscription
-};
-
-class Request {
-    final String query;
-    final JsonObject variables;
-    final OperationType opType;
-    final String StringopName;
-
-    Request ({
-        required this.query,
-        required this.variables,
-        required this.opType,
-        required this.StringopName
-    });
-    
-}
-
-class Response {
-    final JsonObject data;
-    final String opName;
-
-    Response({
-        required this.data,
-        required this.opName
-    });
-} 
-
-abstract class Requestable {
-    Request toRequest();
-}
-
-abstract class Link {
-    Future<Response> request(Request request)
-}
-
-
-
-typedef JsonObject = Map<String, dynamic>;
-// ignore_for_file: non_constant_identifier_names
-// ignore_for_file: camel_case_types
+import "dart/shalom_core/"
 
 
 
 
-class 
-    GetTaskStatusOpt
- extends Requestable {
+
+
+class GetTaskStatusOpt{
 
     /// class members
     
@@ -61,17 +15,14 @@ class
             final GetTaskStatusOpt_task task;
         
     
+
     // keywordargs constructor
-    
-    GetTaskStatusOpt
-({
+    GetTaskStatusOpt({
     required
         this.task,
     
     });
-    static 
-    GetTaskStatusOpt
- fromJson(JsonObject data) {
+    static GetTaskStatusOpt fromJson(JsonObject data) {
     
         
             final GetTaskStatusOpt_task task_value;
@@ -80,18 +31,14 @@ class
             
         
     
-    return 
-    GetTaskStatusOpt
-(
+    return GetTaskStatusOpt(
     
         
         task: task_value,
     
     );
     }
-    
-    GetTaskStatusOpt
- updateWithJson(JsonObject data) {
+    GetTaskStatusOpt updateWithJson(JsonObject data) {
     
         
         final GetTaskStatusOpt_task task_value;
@@ -104,9 +51,7 @@ class
         }
         
     
-    return 
-    GetTaskStatusOpt
-(
+    return GetTaskStatusOpt(
     
         
         task: task_value,
@@ -116,9 +61,7 @@ class
     @override
     bool operator ==(Object other) {
     return identical(this, other) ||
-    (other is 
-    GetTaskStatusOpt
- &&
+    (other is GetTaskStatusOpt &&
     
         other.task == task 
     
@@ -143,16 +86,6 @@ class
     }
 
 
-    Request toRequest(JsonObject variables) {
-        final jsonEncoder = JsonEncoder();
-        String queryString = jsonEncoder.convert(toJson()); 
-        Request(
-            query: queryString, 
-            variables: variables, 
-            opType: OperationType.Query, 
-            StringopName: "GetTaskStatusOpt"
-        )
-    }
 }
 
 // ------------ OBJECT DEFINITIONS -------------
@@ -174,6 +107,7 @@ class
             final Status? statusOpt;
         
     
+
     // keywordargs constructor
     GetTaskStatusOpt_task({
     required
@@ -331,3 +265,39 @@ class
 
 
 
+
+class RequestGetTaskStatusOpt extends Requestable {
+    final GetTaskStatusOpt operation;
+    final GetTaskStatusOptVariables variables;
+
+    RequestGetTaskStatusOpt({
+        required this.operation,  
+        required this.variables
+    });
+
+    Request toRequest() {
+        final jsonEncoder = JsonEncoder();
+        String queryString = jsonEncoder.convert(operation.toJson()); 
+        return Request(
+            query: queryString, 
+            variables: variables.toJson(), 
+            opType: OperationType.Query, 
+            StringopName: "GetTaskStatusOpt"
+        );
+    }
+}
+
+
+class GetTaskStatusOptVariables {
+    
+
+    GetTaskStatusOptVariables({
+        
+    });
+
+    JsonObject toJson() {
+        return {
+              
+        };
+    } 
+}

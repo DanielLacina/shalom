@@ -16,3 +16,39 @@ class GraphQLResult<T> {
             : null);
   }
 }
+
+enum OperationType {
+    Query,
+    Mutation,
+    Subscription
+};
+
+class Request {
+    final String query;
+    final JsonObject variables;
+    final OperationType opType;
+    final String StringopName;
+
+    Request ({
+        required this.query,
+        required this.variables,
+        required this.opType,
+        required this.StringopName
+    });
+    
+}
+
+class Response {
+    final JsonObject data;
+    final String opName;
+
+    Response({
+        required this.data,
+        required this.opName
+    });
+} 
+
+abstract class Requestable {
+    Request toRequest();
+}
+

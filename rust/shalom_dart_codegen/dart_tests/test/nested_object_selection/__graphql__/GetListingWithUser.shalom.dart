@@ -1,57 +1,13 @@
-
+import "schema.shalom.dart";
 import 'dart:convert';
-
-enum OperationType {
-    Query,
-    Mutation,
-    Subscription
-};
-
-class Request {
-    final String query;
-    final JsonObject variables;
-    final OperationType opType;
-    final String StringopName;
-
-    Request ({
-        required this.query,
-        required this.variables,
-        required this.opType,
-        required this.StringopName
-    });
-    
-}
-
-class Response {
-    final JsonObject data;
-    final String opName;
-
-    Response({
-        required this.data,
-        required this.opName
-    });
-} 
-
-abstract class Requestable {
-    Request toRequest();
-}
-
-abstract class Link {
-    Future<Response> request(Request request)
-}
-
-
-
-typedef JsonObject = Map<String, dynamic>;
-// ignore_for_file: non_constant_identifier_names
-// ignore_for_file: camel_case_types
+import "dart/shalom_core/"
 
 
 
 
-class 
-    GetListingWithUser
- extends Requestable {
+
+
+class GetListingWithUser{
 
     /// class members
     
@@ -59,17 +15,14 @@ class
             final GetListingWithUser_listing listing;
         
     
+
     // keywordargs constructor
-    
-    GetListingWithUser
-({
+    GetListingWithUser({
     required
         this.listing,
     
     });
-    static 
-    GetListingWithUser
- fromJson(JsonObject data) {
+    static GetListingWithUser fromJson(JsonObject data) {
     
         
             final GetListingWithUser_listing listing_value;
@@ -78,18 +31,14 @@ class
             
         
     
-    return 
-    GetListingWithUser
-(
+    return GetListingWithUser(
     
         
         listing: listing_value,
     
     );
     }
-    
-    GetListingWithUser
- updateWithJson(JsonObject data) {
+    GetListingWithUser updateWithJson(JsonObject data) {
     
         
         final GetListingWithUser_listing listing_value;
@@ -102,9 +51,7 @@ class
         }
         
     
-    return 
-    GetListingWithUser
-(
+    return GetListingWithUser(
     
         
         listing: listing_value,
@@ -114,9 +61,7 @@ class
     @override
     bool operator ==(Object other) {
     return identical(this, other) ||
-    (other is 
-    GetListingWithUser
- &&
+    (other is GetListingWithUser &&
     
         other.listing == listing 
     
@@ -141,16 +86,6 @@ class
     }
 
 
-    Request toRequest(JsonObject variables) {
-        final jsonEncoder = JsonEncoder();
-        String queryString = jsonEncoder.convert(toJson()); 
-        Request(
-            query: queryString, 
-            variables: variables, 
-            opType: OperationType.Query, 
-            StringopName: "GetListingWithUser"
-        )
-    }
 }
 
 // ------------ OBJECT DEFINITIONS -------------
@@ -176,6 +111,7 @@ class
             final GetListingWithUser_listing_user user;
         
     
+
     // keywordargs constructor
     GetListingWithUser_listing({
     required
@@ -372,6 +308,7 @@ class
             final int? age;
         
     
+
     // keywordargs constructor
     GetListingWithUser_listing_user({
     required
@@ -545,3 +482,39 @@ class
 
 
 
+
+class RequestGetListingWithUser extends Requestable {
+    final GetListingWithUser operation;
+    final GetListingWithUserVariables variables;
+
+    RequestGetListingWithUser({
+        required this.operation,  
+        required this.variables
+    });
+
+    Request toRequest() {
+        final jsonEncoder = JsonEncoder();
+        String queryString = jsonEncoder.convert(operation.toJson()); 
+        return Request(
+            query: queryString, 
+            variables: variables.toJson(), 
+            opType: OperationType.Query, 
+            StringopName: "GetListingWithUser"
+        );
+    }
+}
+
+
+class GetListingWithUserVariables {
+    
+
+    GetListingWithUserVariables({
+        
+    });
+
+    JsonObject toJson() {
+        return {
+              
+        };
+    } 
+}
