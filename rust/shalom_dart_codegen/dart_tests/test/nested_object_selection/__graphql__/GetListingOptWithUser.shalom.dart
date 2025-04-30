@@ -1,6 +1,6 @@
-import "schema.shalom.dart";
+
 import 'dart:convert';
-import "dart/shalom_core/"
+import 'package:shalom_core/shalom_core.dart';
 
 
 
@@ -518,9 +518,9 @@ class RequestGetListingOptWithUser extends Requestable {
 class GetListingOptWithUserVariables {
     
 
-    GetListingOptWithUserVariables({
+    GetListingOptWithUserVariables(
         
-    });
+    );
 
     JsonObject toJson() {
         return {

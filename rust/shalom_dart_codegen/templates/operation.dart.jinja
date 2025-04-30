@@ -1,6 +1,8 @@
+{% if schema.context.types.enums | length > 0 %}
 import "schema.shalom.dart";
+{% endif %}
 import 'dart:convert';
-import "dart/shalom_core/"
+import 'package:shalom_core/shalom_core.dart';
 
 {% set root_selection = operation.context.root_type.selection_name %}
 {% macro base_object_impl(typename, selections) %}
@@ -206,11 +208,15 @@ class {{ root_selection }}Variables {
     final {{ type_name_for_selection(variable.ty.name) }} name;
     {% endfor %}
 
-    {{ root_selection }}Variables({
-        {% for name, variable in operation.context.variables | items %}
-            required this.{{ name }},
-        {% endfor %}
-    });
+    {{ root_selection }}Variables(
+        {% if variables | length > 0 %}
+            {
+            {% for name, variable in variables | items %}
+                required this.{{ name }},
+            {% endfor %}
+            }
+        {% endif %}
+    );
 
     JsonObject toJson() {
         return {

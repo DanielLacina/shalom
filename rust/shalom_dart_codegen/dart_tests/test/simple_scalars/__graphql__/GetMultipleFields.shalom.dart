@@ -1,6 +1,6 @@
-import "schema.shalom.dart";
+
 import 'dart:convert';
-import "dart/shalom_core/"
+import 'package:shalom_core/shalom_core.dart';
 
 
 
@@ -156,9 +156,9 @@ class RequestGetMultipleFields extends Requestable {
 class GetMultipleFieldsVariables {
     
 
-    GetMultipleFieldsVariables({
+    GetMultipleFieldsVariables(
         
-    });
+    );
 
     JsonObject toJson() {
         return {

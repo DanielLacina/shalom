@@ -1,6 +1,6 @@
-import "schema.shalom.dart";
+
 import 'dart:convert';
-import "dart/shalom_core/"
+import 'package:shalom_core/shalom_core.dart';
 
 
 
@@ -274,9 +274,9 @@ class RequestGetListing extends Requestable {
 class GetListingVariables {
     
 
-    GetListingVariables({
+    GetListingVariables(
         
-    });
+    );
 
     JsonObject toJson() {
         return {

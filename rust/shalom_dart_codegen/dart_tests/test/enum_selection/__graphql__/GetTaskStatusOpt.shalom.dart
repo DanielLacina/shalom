@@ -1,6 +1,8 @@
+
 import "schema.shalom.dart";
+
 import 'dart:convert';
-import "dart/shalom_core/"
+import 'package:shalom_core/shalom_core.dart';
 
 
 
@@ -291,9 +293,9 @@ class RequestGetTaskStatusOpt extends Requestable {
 class GetTaskStatusOptVariables {
     
 
-    GetTaskStatusOptVariables({
+    GetTaskStatusOptVariables(
         
-    });
+    );
 
     JsonObject toJson() {
         return {

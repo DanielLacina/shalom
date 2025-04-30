@@ -1,6 +1,6 @@
-import "schema.shalom.dart";
+
 import 'dart:convert';
-import "dart/shalom_core/"
+import 'package:shalom_core/shalom_core.dart';
 
 
 
@@ -114,9 +114,9 @@ class RequestGetBooleanOptional extends Requestable {
 class GetBooleanOptionalVariables {
     
 
-    GetBooleanOptionalVariables({
+    GetBooleanOptionalVariables(
         
-    });
+    );
 
     JsonObject toJson() {
         return {
