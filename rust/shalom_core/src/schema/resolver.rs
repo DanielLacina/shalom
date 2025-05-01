@@ -7,6 +7,7 @@ use super::{
     utils::TypeRef,
 };
 use anyhow::Result;
+use apollo_compiler::schema::ComponentOrigin;
 use apollo_compiler::{self};
 use apollo_compiler::{schema as apollo_schema, Node};
 use log::{debug, info};
@@ -116,20 +117,19 @@ fn resolve_object(
         let name = name.to_string();
         let ty = resolve_type(context.clone(), field.ty.clone());
         let description = field.description.as_ref().map(|v| v.to_string());
-        // let arguments: Vec<InputValueDefinition> = field.arguments.iter().map(|argument| {
-        //     let description = argument.description.as_ref().map(|v| v.to_string());
-        //     let name = argument.name.to_string();
-        //     let ty = resolve_type(context.clone(), *argument.ty.clone().clone());
-        //     let default_value = argument.default_value.as_ref().map(|v| v.to_string());
-        //     let input_value_definition = InputValueDefinition {
-        //         description,
-        //         name,
-        //         default_value,
-        //         ty 
-        //     };
-        //     input_value_definition
-        // }).collect();
-        let arguments = Vec::new();
+        let arguments: Vec<InputValueDefinition> = field.arguments.iter().map(|argument| {
+            let description = argument.description.as_ref().map(|v| v.to_string());
+            let name = argument.name.to_string();
+            let ty = resolve_type(context.clone(), argument.ty.to_component(ComponentOrigin::Definition).make_mut().clone());
+            let default_value = argument.default_value.as_ref().map(|v| v.to_string());
+            let input_value_definition = InputValueDefinition {
+                description,
+                name,
+                default_value,
+                ty 
+            };
+            input_value_definition
+        }).collect();
         fields.push(FieldDefinition {
             name,
             ty,

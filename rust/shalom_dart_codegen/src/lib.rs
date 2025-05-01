@@ -72,12 +72,12 @@ mod ext_jinja_fns {
         }
     }
 
-    pub fn get_arguments_from_selection(selection: ViaDeserialize<Selection>, schema_ctx: ViaDeserialize<SchemaContext>) {
-         match selection.0 {
-            Selection::Object(obj) => {},
-            _ => panic!("only objects implement arguments")
-         } 
-    }
+    // pub fn get_arguments_from_selection(selection: ViaDeserialize<Selection>, schema_ctx: ViaDeserialize<SchemaContext>) {
+    //      match selection.0 {
+    //         Selection::Object(obj) => {},
+    //         _ => panic!("only objects implement arguments")
+    //      } 
+    // }
 
     pub fn type_name_for_variable(variable: ViaDeserialize<VariableDefinition>) -> String {
         let type_ref = match variable.0.ty {

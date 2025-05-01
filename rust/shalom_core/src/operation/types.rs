@@ -122,7 +122,7 @@ impl InputObjectSelection {
     }
 }
 
-#[derive(Clone, Debug, Eq, PartialEq, Hash, Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Hash, Serialize, Deserialize)]
 pub struct VariableDefinition {
     pub name: String,
     pub ty: FieldType,
