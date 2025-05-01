@@ -87,15 +87,13 @@ class GetIDOptional{
 
 
 
-
-
 class RequestGetIDOptional extends Requestable {
     final GetIDOptional operation;
     final GetIDOptionalVariables variables;
 
     RequestGetIDOptional({
         required this.operation,  
-        required this.variables
+        required this.variables,
     });
 
     Request toRequest() {

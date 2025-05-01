@@ -21,7 +21,7 @@ enum OperationType {
     Query,
     Mutation,
     Subscription
-};
+}
 
 class Request {
     final String query;
@@ -35,6 +35,15 @@ class Request {
         required this.opType,
         required this.StringopName
     });
+
+    JsonObject toJson() {
+      return {
+          "query": query,
+          "variables": variables,
+          "operation_type": opType.toString(), 
+          "op_name": StringopName 
+      };
+    }
     
 }
 

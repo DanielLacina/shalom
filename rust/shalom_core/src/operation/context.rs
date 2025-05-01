@@ -2,10 +2,12 @@ use std::collections::HashMap;
 use std::path::PathBuf;
 use std::rc::Rc;
 
-use serde::Serialize;
+use serde::{Serialize, Deserialize};
 
-use super::types::{FullPathName, Selection, SharedObjectSelection, VariableDefinition};
+use super::types::{FullPathName, Selection, SharedObjectSelection, VariableDefinition, OperationType};
 use crate::schema::context::SharedSchemaContext;
+
+
 #[derive(Debug, Serialize)]
 pub struct OperationContext {
     #[serde(skip_serializing)]
@@ -15,16 +17,18 @@ pub struct OperationContext {
     variables: HashMap<String, VariableDefinition>,
     type_defs: HashMap<FullPathName, Selection>,
     root_type: Option<SharedObjectSelection>,
+    op_ty: OperationType
 }
 
 impl OperationContext {
-    pub fn new(schema: SharedSchemaContext, file_path: PathBuf) -> Self {
+    pub fn new(schema: SharedSchemaContext, file_path: PathBuf, op_ty: OperationType) -> Self {
         OperationContext {
             schema,
             file_path,
             variables: HashMap::new(),
             type_defs: HashMap::new(),
             root_type: None,
+            op_ty
         }
     }
 

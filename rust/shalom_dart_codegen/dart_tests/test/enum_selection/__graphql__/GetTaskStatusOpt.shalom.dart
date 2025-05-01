@@ -266,15 +266,13 @@ class GetTaskStatusOpt{
     }
 
 
-
-
 class RequestGetTaskStatusOpt extends Requestable {
     final GetTaskStatusOpt operation;
     final GetTaskStatusOptVariables variables;
 
     RequestGetTaskStatusOpt({
         required this.operation,  
-        required this.variables
+        required this.variables,
     });
 
     Request toRequest() {

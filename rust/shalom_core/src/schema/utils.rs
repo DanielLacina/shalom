@@ -50,6 +50,6 @@ impl TypeRef {
         self.resolve(ctx).and_then(|t| t.enum_())
     }
     pub fn is_input(&self, ctx: &SchemaContext) -> Option<Node<InputObjectType>> {
-        self.resolve(ctx).and_then(|t| t.input())
+        self.resolve(ctx).and_then(|t| t.input_object())
     }
 }

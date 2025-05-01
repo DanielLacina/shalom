@@ -70,9 +70,6 @@ pub(crate) fn resolve(schema: &str) -> Result<SharedSchemaContext> {
             apollo_schema::ExtendedType::Enum(enum_) => {
                 resolve_enum(ctx.clone(), name.to_string(), enum_.clone());
             },
-            apollo_schema::ExtendedType::InputObject(input) => {
-                resolve_input(ctx.clone(), name.to_string(), input.clone());
-            }
             _ => todo!(
                 "Unsupported type in schema {:?}: {:?}",
                 name.to_string(),
@@ -117,19 +114,7 @@ fn resolve_object(
         let name = name.to_string();
         let ty = resolve_type(context.clone(), field.ty.clone());
         let description = field.description.as_ref().map(|v| v.to_string());
-        let arguments: Vec<InputValueDefinition> = field.arguments.iter().map(|argument| {
-            let description = argument.description.as_ref().map(|v| v.to_string());
-            let name = argument.name.to_string();
-            let ty = resolve_type(context.clone(), argument.ty.to_component(ComponentOrigin::Definition).make_mut().clone());
-            let default_value = argument.default_value.as_ref().map(|v| v.to_string());
-            let input_value_definition = InputValueDefinition {
-                description,
-                name,
-                default_value,
-                ty 
-            };
-            input_value_definition
-        }).collect();
+        let arguments = Vec::new();
         fields.push(FieldDefinition {
             name,
             ty,
@@ -173,38 +158,6 @@ fn resolve_enum(
         members,
     };
     context.add_enum(name.clone(), Node::new(enum_type));
-    TypeRef::new( name)
-}
-
-#[allow(unused)]
-fn resolve_input(
-    context: SharedSchemaContext,
-    name: String,
-    origin: Node<apollo_schema::InputObjectType>,
-) -> TypeRef {
-    if context.get_type(&name).is_some() {
-        return TypeRef::new( name);
-    }
-    let description = origin.description.as_ref().map(|v| v.to_string());
-    let mut input_fields = HashMap::new();
-    for (name, field) in origin.fields.iter() {
-        let description = origin.description.as_ref().map(|v| v.to_string());
-        let ty = resolve_type(context.clone(), field.ty.item_type().clone());
-        let default_value = field.default_value.as_ref().map(|v| v.to_string());
-        let input_value_definition = InputValueDefinition {
-            description,        
-            name: name.to_string(),
-            ty,
-            default_value
-         };
-        input_fields.insert(name.to_string(), input_value_definition);
-    }
-    let input = InputObjectType  {
-          description,
-          name: name.clone(),
-          fields: input_fields
-    }; 
-    context.add_input(name.clone(), Node::new(input));
     TypeRef::new( name)
 }
 

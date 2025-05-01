@@ -247,15 +247,13 @@ class GetListing{
     }
 
 
-
-
 class RequestGetListing extends Requestable {
     final GetListing operation;
     final GetListingVariables variables;
 
     RequestGetListing({
         required this.operation,  
-        required this.variables
+        required this.variables,
     });
 
     Request toRequest() {

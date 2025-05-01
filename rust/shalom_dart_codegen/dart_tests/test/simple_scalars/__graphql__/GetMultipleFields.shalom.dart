@@ -129,15 +129,13 @@ class GetMultipleFields{
 
 
 
-
-
 class RequestGetMultipleFields extends Requestable {
     final GetMultipleFields operation;
     final GetMultipleFieldsVariables variables;
 
     RequestGetMultipleFields({
         required this.operation,  
-        required this.variables
+        required this.variables,
     });
 
     Request toRequest() {

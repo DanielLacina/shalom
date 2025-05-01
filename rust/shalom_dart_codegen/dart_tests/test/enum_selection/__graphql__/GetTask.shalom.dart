@@ -256,15 +256,13 @@ class GetTask{
     }
 
 
-
-
 class RequestGetTask extends Requestable {
     final GetTask operation;
     final GetTaskVariables variables;
 
     RequestGetTask({
         required this.operation,  
-        required this.variables
+        required this.variables,
     });
 
     Request toRequest() {

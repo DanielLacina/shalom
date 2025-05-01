@@ -87,15 +87,13 @@ class GetInt{
 
 
 
-
-
 class RequestGetInt extends Requestable {
     final GetInt operation;
     final GetIntVariables variables;
 
     RequestGetInt({
         required this.operation,  
-        required this.variables
+        required this.variables,
     });
 
     Request toRequest() {

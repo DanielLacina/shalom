@@ -257,15 +257,13 @@ class GetListingOpt{
     }
 
 
-
-
 class RequestGetListingOpt extends Requestable {
     final GetListingOpt operation;
     final GetListingOptVariables variables;
 
     RequestGetListingOpt({
         required this.operation,  
-        required this.variables
+        required this.variables,
     });
 
     Request toRequest() {

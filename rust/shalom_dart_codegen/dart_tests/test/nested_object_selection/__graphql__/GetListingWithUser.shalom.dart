@@ -481,15 +481,13 @@ class GetListingWithUser{
     }
 
 
-
-
 class RequestGetListingWithUser extends Requestable {
     final GetListingWithUser operation;
     final GetListingWithUserVariables variables;
 
     RequestGetListingWithUser({
         required this.operation,  
-        required this.variables
+        required this.variables,
     });
 
     Request toRequest() {

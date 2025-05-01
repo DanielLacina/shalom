@@ -294,15 +294,13 @@ class GetProductDetails{
     }
 
 
-
-
 class RequestGetProductDetails extends Requestable {
     final GetProductDetails operation;
     final GetProductDetailsVariables variables;
 
     RequestGetProductDetails({
         required this.operation,  
-        required this.variables
+        required this.variables,
     });
 
     Request toRequest() {

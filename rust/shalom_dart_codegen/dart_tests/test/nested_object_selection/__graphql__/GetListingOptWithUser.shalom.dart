@@ -491,15 +491,13 @@ class GetListingOptWithUser{
     }
 
 
-
-
 class RequestGetListingOptWithUser extends Requestable {
     final GetListingOptWithUser operation;
     final GetListingOptWithUserVariables variables;
 
     RequestGetListingOptWithUser({
         required this.operation,  
-        required this.variables
+        required this.variables,
     });
 
     Request toRequest() {

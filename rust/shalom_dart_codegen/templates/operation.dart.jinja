@@ -179,14 +179,13 @@ class {{ root_type_name }}{
     }
 {% endfor %}
 
-
 class Request{{ root_selection }} extends Requestable {
     final {{ root_type_name }} operation;
     final {{ root_selection }}Variables variables;
 
     Request{{ root_selection }}({
         required this.operation,  
-        required this.variables
+        required this.variables,
     });
 
     Request toRequest() {
@@ -195,7 +194,7 @@ class Request{{ root_selection }} extends Requestable {
         return Request(
             query: queryString, 
             variables: variables.toJson(), 
-            opType: OperationType.Query, 
+            opType: OperationType.{{ operation.context.op_ty.name }}, 
             StringopName: "{{ root_selection }}"
         );
     }

@@ -2,7 +2,7 @@ use std::collections::HashMap;
 use std::path::PathBuf;
 use std::rc::Rc;
 
-use apollo_compiler::{executable as apollo_executable, Node};
+use apollo_compiler::{executable as apollo_executable, Node, ast::OperationType as ApolloOperationType};
 use log::{info, trace};
 
 use crate::context::SharedShalomGlobalContext;
@@ -13,8 +13,7 @@ use crate::schema::resolver::resolve_type;
 
 use super::context::{OperationContext, SharedOpCtx};
 use super::types::{
-    EnumSelection, ScalarSelection, Selection, SelectionCommon, SharedEnumSelection,
-    SharedObjectSelection, SharedScalarSelection, InputObjectSelection, SharedInputObjectSelection, VariableDefinition 
+    EnumSelection, OperationType, ScalarSelection, Selection, SelectionCommon, SharedEnumSelection, SharedObjectSelection, SharedScalarSelection, VariableDefinition 
 };
 
 fn full_path_name(this_name: &String, parent: &Option<&Selection>) -> String {
@@ -31,12 +30,6 @@ fn parse_enum_selection(
     EnumSelection::new(selection_common, concrete_type)
 }
 
-fn parse_input_selection(
-    selection_common: SelectionCommon,
-    concrete_type: Node<InputObjectType>,
-) -> SharedInputObjectSelection {
-    InputObjectSelection::new(selection_common, concrete_type)
-}
 
 fn parse_object_selection(
     #[allow(unused)] parent: &Option<&Selection>,
@@ -122,7 +115,6 @@ fn parse_selection_set(
             selection_orig,
         )),
         GraphQLAny::Enum(_enum) => Selection::Enum(parse_enum_selection(selection_common, _enum)),
-        GraphQLAny::InputObject(input) => Selection::InputObject(parse_input_selection(selection_common, input)),
         _ => todo!("Unsupported type {:?}", schema_type),
     };
 
@@ -130,13 +122,20 @@ fn parse_selection_set(
     selection
 }
 
+fn parse_operation_type(operation_type: ApolloOperationType) -> OperationType {
+    match operation_type {
+        ApolloOperationType::Query => OperationType::Query,
+        ApolloOperationType::Mutation => OperationType::Mutation,
+        ApolloOperationType::Subscription => OperationType::Subscription
+    }
+}
 fn parse_operation(
     global_ctx: &SharedShalomGlobalContext,
     op: Node<apollo_compiler::executable::Operation>,
     name: String,
     file_path: PathBuf,
 ) -> SharedOpCtx {
-    let mut ctx = OperationContext::new(global_ctx.schema_ctx.clone(), file_path);
+    let mut ctx = OperationContext::new(global_ctx.schema_ctx.clone(), file_path, parse_operation_type(op.operation_type.clone()));
     for variable in op.variables.iter() {
         let name = variable.name.to_string(); 
         let default_value = variable.default_value.as_ref().map(|v| v.to_string());

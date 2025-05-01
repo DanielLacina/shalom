@@ -57,9 +57,9 @@ impl GraphQLAny {
         }
     }
 
-    pub fn input(&self) -> Option<Node<InputObjectType>> {
+    pub fn input_object(&self) -> Option<Node<InputObjectType>> {
         match self {
-            GraphQLAny::InputObject(input) => Some(Node::clone(input)),
+            GraphQLAny::InputObject(input_object) => Some(Node::clone(input_object)),
             _ => None,
         }
     }

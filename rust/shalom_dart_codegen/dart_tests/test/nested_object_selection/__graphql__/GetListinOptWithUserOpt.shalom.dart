@@ -427,15 +427,13 @@ class GetListinOptWithUserOpt{
     }
 
 
-
-
 class RequestGetListinOptWithUserOpt extends Requestable {
     final GetListinOptWithUserOpt operation;
     final GetListinOptWithUserOptVariables variables;
 
     RequestGetListinOptWithUserOpt({
         required this.operation,  
-        required this.variables
+        required this.variables,
     });
 
     Request toRequest() {

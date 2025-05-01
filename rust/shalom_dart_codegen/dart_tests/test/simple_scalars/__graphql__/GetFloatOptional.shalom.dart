@@ -87,15 +87,13 @@ class GetFloatOptional{
 
 
 
-
-
 class RequestGetFloatOptional extends Requestable {
     final GetFloatOptional operation;
     final GetFloatOptionalVariables variables;
 
     RequestGetFloatOptional({
         required this.operation,  
-        required this.variables
+        required this.variables,
     });
 
     Request toRequest() {

@@ -87,15 +87,13 @@ class GetIntOptional{
 
 
 
-
-
 class RequestGetIntOptional extends Requestable {
     final GetIntOptional operation;
     final GetIntOptionalVariables variables;
 
     RequestGetIntOptional({
         required this.operation,  
-        required this.variables
+        required this.variables,
     });
 
     Request toRequest() {

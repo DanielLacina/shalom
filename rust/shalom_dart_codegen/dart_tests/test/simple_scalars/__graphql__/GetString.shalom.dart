@@ -87,15 +87,13 @@ class GetString{
 
 
 
-
-
 class RequestGetString extends Requestable {
     final GetString operation;
     final GetStringVariables variables;
 
     RequestGetString({
         required this.operation,  
-        required this.variables
+        required this.variables,
     });
 
     Request toRequest() {

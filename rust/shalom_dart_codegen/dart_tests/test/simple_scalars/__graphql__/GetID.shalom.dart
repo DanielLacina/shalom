@@ -87,15 +87,13 @@ class GetID{
 
 
 
-
-
 class RequestGetID extends Requestable {
     final GetID operation;
     final GetIDVariables variables;
 
     RequestGetID({
         required this.operation,  
-        required this.variables
+        required this.variables,
     });
 
     Request toRequest() {

@@ -417,15 +417,13 @@ class GetListingWithUserOpt{
     }
 
 
-
-
 class RequestGetListingWithUserOpt extends Requestable {
     final GetListingWithUserOpt operation;
     final GetListingWithUserOptVariables variables;
 
     RequestGetListingWithUserOpt({
         required this.operation,  
-        required this.variables
+        required this.variables,
     });
 
     Request toRequest() {

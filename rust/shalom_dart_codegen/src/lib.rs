@@ -62,13 +62,6 @@ mod ext_jinja_fns {
                     enum_.concrete_type.name.clone()
                 }
             },
-            Selection::InputObject(input_object) => {
-                if input_object.common.is_optional {
-                   format!("{}?", input_object.common.full_name)     
-                } else {
-                    input_object.common.full_name.clone() 
-                }
-            }
         }
     }
 

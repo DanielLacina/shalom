@@ -87,15 +87,13 @@ class GetBooleanOptional{
 
 
 
-
-
 class RequestGetBooleanOptional extends Requestable {
     final GetBooleanOptional operation;
     final GetBooleanOptionalVariables variables;
 
     RequestGetBooleanOptional({
         required this.operation,  
-        required this.variables
+        required this.variables,
     });
 
     Request toRequest() {
