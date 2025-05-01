@@ -180,7 +180,6 @@ class {{ root_type_name }}{
 {% endfor %}
 
 
-
 class Request{{ root_selection }} extends Requestable {
     final {{ root_type_name }} operation;
     final {{ root_selection }}Variables variables;
@@ -205,7 +204,7 @@ class Request{{ root_selection }} extends Requestable {
 {% set variables = operation.context.variables %}
 class {{ root_selection }}Variables {
     {% for name, variable in variables | items %}
-    final {{ type_name_for_selection(variable.ty.name) }} name;
+    final {{ type_name_for_variable(variable) }} {{ name }};
     {% endfor %}
 
     {{ root_selection }}Variables(
@@ -221,7 +220,7 @@ class {{ root_selection }}Variables {
     JsonObject toJson() {
         return {
             {%  for name, variable in variables | items %}
-            '{{ name }}': {{ name }}
+            '{{ name }}': {{ name }},
             {% endfor %}  
         };
     } 

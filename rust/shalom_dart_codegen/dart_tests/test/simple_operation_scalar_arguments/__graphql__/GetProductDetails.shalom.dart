@@ -1,18 +1,13 @@
-import "schema.shalom.dart";
+
 import 'dart:convert';
-
-
-
-typedef JsonObject = Map<String, dynamic>;
-// ignore_for_file: non_constant_identifier_names
-// ignore_for_file: camel_case_types
+import 'package:shalom_core/shalom_core.dart';
 
 
 
 
-class 
-    GetProductDetails
-{
+
+
+class GetProductDetails{
 
     /// class members
     
@@ -22,16 +17,12 @@ class
     
 
     // keywordargs constructor
-    
-    GetProductDetails
-({
+    GetProductDetails({
     
         this.product,
     
     });
-    static 
-    GetProductDetails
- fromJson(JsonObject data) {
+    static GetProductDetails fromJson(JsonObject data) {
     
         
             final GetProductDetails_product? product_value;
@@ -45,18 +36,14 @@ class
             
         
     
-    return 
-    GetProductDetails
-(
+    return GetProductDetails(
     
         
         product: product_value,
     
     );
     }
-    
-    GetProductDetails
- updateWithJson(JsonObject data) {
+    GetProductDetails updateWithJson(JsonObject data) {
     
         
         final GetProductDetails_product? product_value;
@@ -74,9 +61,7 @@ class
         }
         
     
-    return 
-    GetProductDetails
-(
+    return GetProductDetails(
     
         
         product: product_value,
@@ -86,9 +71,7 @@ class
     @override
     bool operator ==(Object other) {
     return identical(this, other) ||
-    (other is 
-    GetProductDetails
- &&
+    (other is GetProductDetails &&
     
         other.product == product 
     
@@ -314,29 +297,59 @@ class
 
 
 class RequestGetProductDetails extends Requestable {
-    final 
-    GetProductDetails
- operation;
+    final GetProductDetails operation;
     final GetProductDetailsVariables variables;
+
+    RequestGetProductDetails({
+        required this.operation,  
+        required this.variables
+    });
 
     Request toRequest() {
         final jsonEncoder = JsonEncoder();
         String queryString = jsonEncoder.convert(operation.toJson()); 
-        Request(
+        return Request(
             query: queryString, 
-            variables: variable.toJson(), 
+            variables: variables.toJson(), 
             opType: OperationType.Query, 
             StringopName: "GetProductDetails"
-        )
+        );
     }
 }
 
+
 class GetProductDetailsVariables {
     
-    final Boolean name;
+    final bool calculateDiscount;
     
-    final ID name;
+    final String productId;
     
-    final Float name;
+    final double userDiscount;
     
+
+    GetProductDetailsVariables(
+        
+            {
+            
+                required this.calculateDiscount,
+            
+                required this.productId,
+            
+                required this.userDiscount,
+            
+            }
+        
+    );
+
+    JsonObject toJson() {
+        return {
+            
+            'calculateDiscount': calculateDiscount,
+            
+            'productId': productId,
+            
+            'userDiscount': userDiscount,
+              
+        };
+    } 
 }
